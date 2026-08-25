@@ -18,7 +18,9 @@ const appState = {
   isRunning: false,
   timeLeft: WORK_DURATION,
   completedPomodoros: 0,
-  timerId: null
+  timerId: null,
+  isCycleComplete: false,
+  audioContext: null
 };
 
 function formatTime(totalSeconds) {
@@ -41,19 +43,55 @@ function clearTimerInterval() {
 
 function renderState() {
   const modeLabel = appState.mode === 'work' ? 'Work' : 'Short Break';
-  const statusMessage = appState.isRunning
-    ? appState.mode === 'work'
-      ? 'Trabajo en curso'
-      : 'Descanso corto'
-    : 'Listo para empezar';
+  let statusMessage = 'Listo para empezar';
+
+  if (appState.isCycleComplete) {
+    statusMessage = 'Ciclo completado';
+  } else if (appState.isRunning) {
+    statusMessage = appState.mode === 'work' ? 'Trabajo en curso' : 'Descanso corto';
+  }
 
   elements.app.classList.toggle('app--work', appState.mode === 'work');
   elements.app.classList.toggle('app--break', appState.mode === 'shortBreak');
+  elements.app.classList.toggle('app--cycle-finished', appState.isCycleComplete);
 
   elements.mode.textContent = modeLabel;
   elements.display.textContent = formatTime(appState.timeLeft);
   elements.pomodoroCount.textContent = String(appState.completedPomodoros);
   elements.status.textContent = statusMessage;
+}
+
+function playCompletionTone() {
+  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+
+  if (!AudioContextClass) {
+    return;
+  }
+
+  try {
+    if (!appState.audioContext) {
+      appState.audioContext = new AudioContextClass();
+    }
+
+    const oscillator = appState.audioContext.createOscillator();
+    const gainNode = appState.audioContext.createGain();
+
+    oscillator.type = 'sine';
+    oscillator.frequency.setValueAtTime(880, appState.audioContext.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(660, appState.audioContext.currentTime + 0.18);
+
+    gainNode.gain.setValueAtTime(0.0001, appState.audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.08, appState.audioContext.currentTime + 0.02);
+    gainNode.gain.exponentialRampToValueAtTime(0.0001, appState.audioContext.currentTime + 0.35);
+
+    oscillator.connect(gainNode);
+    gainNode.connect(appState.audioContext.destination);
+
+    oscillator.start();
+    oscillator.stop(appState.audioContext.currentTime + 0.35);
+  } catch (error) {
+    console.warn('No se pudo reproducir la notificación sonora:', error);
+  }
 }
 
 function startTimer() {
@@ -62,6 +100,7 @@ function startTimer() {
   }
 
   appState.isRunning = true;
+  appState.isCycleComplete = false;
   renderState();
 
   appState.timerId = setInterval(() => {
@@ -93,6 +132,7 @@ function pauseTimer() {
 
 function resetTimer() {
   appState.isRunning = false;
+  appState.isCycleComplete = false;
   clearTimerInterval();
   appState.timeLeft = getModeDuration(appState.mode);
   renderState();
@@ -101,6 +141,7 @@ function resetTimer() {
 function switchMode(nextMode) {
   appState.mode = nextMode;
   appState.isRunning = false;
+  appState.isCycleComplete = false;
   appState.timeLeft = getModeDuration(nextMode);
   clearTimerInterval();
   renderState();
@@ -110,15 +151,16 @@ function completeCycle() {
   clearTimerInterval();
   appState.isRunning = false;
 
-  const nextMode = appState.mode === 'work' ? 'shortBreak' : 'work';
-  switchMode(nextMode);
-
-  if (nextMode === 'work') {
-    appState.timeLeft = getModeDuration('work');
-  } else {
-    appState.timeLeft = getModeDuration('shortBreak');
+  if (appState.mode === 'work') {
+    appState.completedPomodoros += 1;
   }
 
+  appState.isCycleComplete = true;
+  playCompletionTone();
+  renderState();
+
+  const nextMode = appState.mode === 'work' ? 'shortBreak' : 'work';
+  switchMode(nextMode);
   startTimer();
 }
 

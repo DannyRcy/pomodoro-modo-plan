@@ -161,6 +161,26 @@ select {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.9));
 }
 
+.app--cycle-finished {
+  animation: cycle-flash 0.7s ease-in-out;
+  border-color: rgba(47, 158, 102, 0.75);
+}
+
+@keyframes cycle-flash {
+  0% {
+    transform: scale(1);
+    box-shadow: var(--shadow);
+  }
+  35% {
+    transform: scale(1.02);
+    box-shadow: 0 0 0 8px rgba(47, 158, 102, 0.17);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: var(--shadow);
+  }
+}
+
 @media (max-width: 480px) {
   .app {
     padding: 1.5rem 1rem;

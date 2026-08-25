@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pomodoro</title>
+    <meta
+      name="description"
+      content="Temporizador Pomodoro basado en HTML, CSS y JavaScript vanilla."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app" aria-label="Aplicación Pomodoro">
+      <header class="app__header">
+        <h1 class="app__title">Pomodoro</h1>
+      </header>
+
+      <section class="timer-panel" aria-labelledby="timer-mode">
+        <p class="timer-panel__label">Modo actual</p>
+        <h2 id="timer-mode" class="timer-panel__mode" aria-live="polite">Work</h2>
+
+        <div
+          id="timer-display"
+          class="timer-panel__display"
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          25:00
+        </div>
+
+        <div class="timer-panel__actions" aria-label="Controles del temporizador">
+          <button type="button" id="start-btn" class="btn btn--primary">Iniciar</button>
+          <button type="button" id="pause-btn" class="btn btn--secondary">Pausar</button>
+          <button type="button" id="reset-btn" class="btn btn--tertiary">Reiniciar</button>
+        </div>
+
+        <p id="timer-status" class="timer-panel__status" aria-live="polite">
+          Listo para empezar
+        </p>
+      </section>
+
+      <aside class="summary" aria-label="Resumen del trabajo">
+        <p class="summary__label">Pomodoros completados</p>
+        <strong id="pomodoro-count" class="summary__count">0</strong>
+      </aside>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>

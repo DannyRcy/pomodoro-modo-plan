@@ -154,11 +154,13 @@ select {
 }
 
 .app--work {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.9));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(243, 209, 209, 0.85));
+  border-color: rgba(217, 79, 79, 0.25);
 }
 
 .app--break {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.9));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(223, 234, 252, 0.9));
+  border-color: rgba(47, 111, 237, 0.25);
 }
 
 .app--cycle-finished {

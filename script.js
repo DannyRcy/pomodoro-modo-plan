@@ -1,6 +1,7 @@
 const WORK_DURATION = 25 * 60;
 const SHORT_BREAK_DURATION = 5 * 60;
 const DEFAULT_MODE = 'work';
+const TRANSITION_DELAY_MS = 800;
 
 const elements = {
   app: document.getElementById('app'),
@@ -34,6 +35,18 @@ function getModeDuration(mode) {
   return mode === 'work' ? WORK_DURATION : SHORT_BREAK_DURATION;
 }
 
+function updateTabTitle() {
+  const modePrefix = appState.mode === 'work' ? 'Work' : 'Break';
+  const timeText = formatTime(appState.timeLeft);
+
+  if (appState.isCycleComplete) {
+    document.title = '¡Tiempo!';
+    return;
+  }
+
+  document.title = `${modePrefix} - ${timeText}`;
+}
+
 function clearTimerInterval() {
   if (appState.timerId !== null) {
     clearInterval(appState.timerId);
@@ -59,6 +72,7 @@ function renderState() {
   elements.display.textContent = formatTime(appState.timeLeft);
   elements.pomodoroCount.textContent = String(appState.completedPomodoros);
   elements.status.textContent = statusMessage;
+  updateTabTitle();
 }
 
 function playCompletionTone() {
@@ -160,8 +174,28 @@ function completeCycle() {
   renderState();
 
   const nextMode = appState.mode === 'work' ? 'shortBreak' : 'work';
-  switchMode(nextMode);
-  startTimer();
+
+  window.setTimeout(() => {
+    switchMode(nextMode);
+    startTimer();
+  }, TRANSITION_DELAY_MS);
 }
 
+function bindControlEvents() {
+  elements.startBtn.addEventListener('click', function () {
+    if (!appState.isRunning) {
+      startTimer();
+    }
+  });
+
+  elements.pauseBtn.addEventListener('click', function () {
+    pauseTimer();
+  });
+
+  elements.resetBtn.addEventListener('click', function () {
+    resetTimer();
+  });
+}
+
+bindControlEvents();
 renderState();

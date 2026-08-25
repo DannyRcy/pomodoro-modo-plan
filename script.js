@@ -28,8 +28,24 @@ function formatTime(totalSeconds) {
   return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 }
 
+function getModeDuration(mode) {
+  return mode === 'work' ? WORK_DURATION : SHORT_BREAK_DURATION;
+}
+
+function clearTimerInterval() {
+  if (appState.timerId !== null) {
+    clearInterval(appState.timerId);
+    appState.timerId = null;
+  }
+}
+
 function renderState() {
   const modeLabel = appState.mode === 'work' ? 'Work' : 'Short Break';
+  const statusMessage = appState.isRunning
+    ? appState.mode === 'work'
+      ? 'Trabajo en curso'
+      : 'Descanso corto'
+    : 'Listo para empezar';
 
   elements.app.classList.toggle('app--work', appState.mode === 'work');
   elements.app.classList.toggle('app--break', appState.mode === 'shortBreak');
@@ -37,7 +53,73 @@ function renderState() {
   elements.mode.textContent = modeLabel;
   elements.display.textContent = formatTime(appState.timeLeft);
   elements.pomodoroCount.textContent = String(appState.completedPomodoros);
-  elements.status.textContent = appState.isRunning ? 'Trabajo en curso' : 'Listo para empezar';
+  elements.status.textContent = statusMessage;
+}
+
+function startTimer() {
+  if (appState.isRunning) {
+    return;
+  }
+
+  appState.isRunning = true;
+  renderState();
+
+  appState.timerId = setInterval(() => {
+    if (!appState.isRunning) {
+      return;
+    }
+
+    appState.timeLeft -= 1;
+
+    if (appState.timeLeft <= 0) {
+      appState.timeLeft = 0;
+      completeCycle();
+      return;
+    }
+
+    renderState();
+  }, 1000);
+}
+
+function pauseTimer() {
+  if (!appState.isRunning) {
+    return;
+  }
+
+  appState.isRunning = false;
+  clearTimerInterval();
+  renderState();
+}
+
+function resetTimer() {
+  appState.isRunning = false;
+  clearTimerInterval();
+  appState.timeLeft = getModeDuration(appState.mode);
+  renderState();
+}
+
+function switchMode(nextMode) {
+  appState.mode = nextMode;
+  appState.isRunning = false;
+  appState.timeLeft = getModeDuration(nextMode);
+  clearTimerInterval();
+  renderState();
+}
+
+function completeCycle() {
+  clearTimerInterval();
+  appState.isRunning = false;
+
+  const nextMode = appState.mode === 'work' ? 'shortBreak' : 'work';
+  switchMode(nextMode);
+
+  if (nextMode === 'work') {
+    appState.timeLeft = getModeDuration('work');
+  } else {
+    appState.timeLeft = getModeDuration('shortBreak');
+  }
+
+  startTimer();
 }
 
 renderState();

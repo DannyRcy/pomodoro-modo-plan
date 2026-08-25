@@ -1,102 +1,183 @@
-# Bitácora de prompts clave
+# Bitácora de Prompts Clave
 
-Este archivo recoge los prompts principales utilizados durante la generación y desarrollo del proyecto Pomodoro.
+Esta bitácora registra los prompts utilizados durante la planificación y la implementación inicial del proyecto Pomodoro mediante el enfoque **Modo Plan**.
 
-## 1) Planificación inicial del proyecto
+Se ha dejado registrada la evolución hasta el paso 2 del plan, que corresponde a la estructura base inicial.
 
-Prompt clave:
+---
+
+## Paso 1. Planificación inicial del proyecto
+
+### Prompt utilizado
 
 > Antes de generar cualquier código, quiero que analices y planifiques el desarrollo de una aplicación web de gestión de tiempo tipo Pomodoro.
->
-> La aplicación debe desarrollarse exclusivamente con:
-> - HTML5
-> - CSS3
-> - JavaScript Vanilla
-> No se permite utilizar: React, Angular, Vue, Bootstrap, Tailwind, jQuery, npm, Vite, Webpack, librerías externas, frameworks, servicios externos.
->
-> La aplicación debe poder ejecutarse directamente abriendo index.html en un navegador moderno.
->
-> Los requisitos funcionales son: ...
->
-> Antes de escribir código, crea un plan detallado de implementación que incluya:
-> - estructura de archivos;
-> - estructura HTML;
-> - organización del CSS;
-> - organización del JavaScript;
-> - estado de la aplicación;
-> - variables necesarias;
-> - funcionamiento del temporizador;
-> - manejo de los modos Work y Short Break;
-> - eventos de los botones;
-> - transición entre estados;
-> - contador de Pomodoros;
-> - sistema de notificaciones;
-> - actualización del título de la pestaña;
-> - diseño responsive;
-> - accesibilidad;
-> - manejo de errores;
-> - casos borde;
-> - estrategia de pruebas;
-> - orden recomendado de implementación.
->
-> NO generes todavía index.html, styles.css ni script.js.
->
-> Crea directamente un archivo llamado PLAN.md en la raíz del repositorio con el plan completo.
->
-> Después de crear PLAN.md, revisa que todos los requisitos funcionales estén contemplados antes de finalizar.
+> 
+> La aplicación debe desarrollarse exclusivamente con HTML5, CSS3 y JavaScript Vanilla.
+> 
+> No se permite utilizar React, Angular, Vue, Bootstrap, Tailwind, jQuery, npm, Vite, Webpack, librerías externas, frameworks ni servicios externos.
+> 
+> La aplicación debe poder ejecutarse directamente abriendo `index.html` en un navegador moderno.
+> 
+> Debe incluir temporizador Work de 25 minutos, Short Break de 5 minutos, iniciar, pausar, reiniciar, transición automática, contador de Pomodoros, notificación sonora, feedback visual, cambio temporal de título de la pestaña, diseño responsive, HTML5 semántico y accesibilidad básica.
+> 
+> Antes de escribir código, crea un plan detallado y crea un archivo `PLAN.md` en la raíz con toda la estrategia.
 
-Resultado:
-- Se creó el archivo PLAN.md con la estrategia completa de implementación.
+### Resultado
 
-## 2) Implementación del primer paso del plan
+- Se creó el documento de planificación [`PLAN.md`](PLAN.md).
+- Se definió la estructura general del proyecto.
+- Se estableció el orden de implementación antes de generar el código.
 
-Prompt clave:
+---
 
-> Ahora comienza la implementación siguiendo el PLAN.md.
->
+## Paso 2. Implementación de la estructura base
+
+### Prompt utilizado
+
+> Ahora comienza la implementación siguiendo el `PLAN.md`.
+> 
 > Antes de modificar cualquier archivo, revisa el plan completo y determina cuál es el primer paso de implementación indicado en la sección de orden recomendado.
->
+> 
 > Implementa únicamente ese primer paso.
->
+> 
 > No avances todavía a los pasos siguientes.
->
-> Mantén estrictamente las tecnologías y restricciones establecidas en PLAN.md.
->
-> Crea o modifica directamente los archivos necesarios para completar únicamente el primer paso del plan.
 
-Resultado:
-- Se creó la estructura base de HTML y la base inicial del proyecto.
+### Resultado
 
-## 3) Continuación por pasos sucesivos del plan
+- Se construyó la estructura base del proyecto.
+- Se creó la estructura HTML semántica.
+- Se dejó preparada la base inicial del documento.
+- No se implementaron todavía las funcionalidades correspondientes a pasos posteriores.
 
-Prompt clave:
+---
 
-> Vamos con los pasos 3 y 4
+## Paso 3. Definición del estado de la aplicación
 
-Resultado:
-- Se definió el estado inicial de la aplicación y el render inicial.
+### Prompt utilizado
 
-Prompt clave:
+> Vamos con el paso 3.
 
-> Vamos al paso 5 y 6
+### Resultado
 
-Resultado:
-- Se implementó la lógica del temporizador y la gestión de Work/Short Break.
+- Se definió el estado inicial de la aplicación.
+- Se establecieron las variables necesarias para representar el estado del temporizador.
+- Se preparó la estructura necesaria para controlar el modo actual de la aplicación.
 
-Prompt clave:
+---
 
-> Vamos a los pasos 7 y 8
+## Paso 4. Renderizado inicial de la interfaz
 
-Resultado:
-- Se añadieron el contador de Pomodoros y el feedback visual/sonoro de ciclo.
+### Prompt utilizado
 
-Prompt clave:
+> Vamos con el paso 4.
 
-> Vamos ya del paso 9, 10 y 11 y acabamos. Pero hazlo correcto
+### Resultado
 
-Resultado:
-- Se finalizó con título de pestaña, ajustes finales de responsive/accesibilidad y validación del proyecto.
+- Se implementó el render inicial de la interfaz.
+- Se conectó el estado de la aplicación con el contenido mostrado al usuario.
+- Se dejó preparada la actualización visual de los elementos de la interfaz.
 
-## 4) Estado final
+---
 
-La aplicación quedó implementada como una web estática compatible con abrirse directamente en navegador, sin servidor ni dependencias externas.
+## Paso 5. Implementación de la lógica del temporizador
+
+### Prompt utilizado
+
+> Vamos al paso 5.
+
+### Resultado
+
+- Se implementó la lógica principal del temporizador.
+- Se estableció la cuenta regresiva.
+- Se incorporó el control del tiempo restante.
+- Se preparó el funcionamiento de los controles del temporizador.
+
+---
+
+## Paso 6. Implementación de Work y Short Break
+
+### Prompt utilizado
+
+> Vamos al paso 6.
+
+### Resultado
+
+- Se implementaron los estados `Work` y `Short Break`.
+- Se establecieron las duraciones de 25 y 5 minutos respectivamente.
+- Se implementó la transición entre ambos modos.
+- Se estableció el comportamiento automático al finalizar cada ciclo.
+
+---
+
+## Paso 7. Contador de Pomodoros
+
+### Prompt utilizado
+
+> Vamos a los pasos 7 y 8.
+
+### Resultado correspondiente al Paso 7
+
+- Se añadió el contador de Pomodoros completados.
+- El contador aumenta cuando finaliza correctamente un ciclo `Work`.
+- El contador no aumenta al finalizar un ciclo `Short Break`.
+
+---
+
+## Paso 8. Notificación sonora y feedback visual
+
+### Prompt utilizado
+
+> Vamos a los pasos 7 y 8.
+
+### Resultado correspondiente al Paso 8
+
+- Se implementó la notificación sonora mediante Web Audio API.
+- Se añadió feedback visual al finalizar cada ciclo.
+- Se diferenciaron visualmente los eventos de finalización del temporizador.
+
+---
+
+## Paso 9. Cambio temporal del título de la pestaña
+
+### Prompt utilizado
+
+> Vamos ya al paso 9.
+
+### Resultado
+
+- Se implementó el cambio temporal del título de la pestaña.
+- El título permite informar al usuario cuando un ciclo ha finalizado.
+- Se configuró el retorno del título al estado normal después de la notificación.
+
+---
+
+## Paso 10. Diseño Responsive
+
+### Prompt utilizado
+
+> Vamos al paso 10.
+
+### Resultado
+
+- Se mejoró la adaptación de la interfaz a diferentes tamaños de pantalla.
+- Se realizaron ajustes para dispositivos móviles, tablets y computadoras.
+- Se mejoró la distribución y legibilidad de los elementos de la interfaz.
+
+---
+
+## Paso 11. Accesibilidad y revisión final
+
+### Prompt utilizado
+
+> Vamos al paso 11 y acabamos. Pero hazlo correcto.
+
+### Resultado
+
+- Se realizaron mejoras relacionadas con accesibilidad.
+- Se revisó la estructura semántica HTML.
+- Se verificó el uso de los controles mediante teclado.
+- Se revisaron los estados visuales de la interfaz.
+- Se realizó una revisión general del funcionamiento de la aplicación.
+
+---
+

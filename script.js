@@ -1,4 +1,9 @@
+const WORK_DURATION = 25 * 60;
+const SHORT_BREAK_DURATION = 5 * 60;
+const DEFAULT_MODE = 'work';
+
 const elements = {
+  app: document.getElementById('app'),
   mode: document.getElementById('timer-mode'),
   display: document.getElementById('timer-display'),
   startBtn: document.getElementById('start-btn'),
@@ -9,10 +14,11 @@ const elements = {
 };
 
 const appState = {
-  mode: 'work',
+  mode: DEFAULT_MODE,
   isRunning: false,
-  timeLeft: 25 * 60,
-  completedPomodoros: 0
+  timeLeft: WORK_DURATION,
+  completedPomodoros: 0,
+  timerId: null
 };
 
 function formatTime(totalSeconds) {
@@ -22,11 +28,16 @@ function formatTime(totalSeconds) {
   return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 }
 
-function renderInitialState() {
-  elements.mode.textContent = appState.mode === 'work' ? 'Work' : 'Short Break';
+function renderState() {
+  const modeLabel = appState.mode === 'work' ? 'Work' : 'Short Break';
+
+  elements.app.classList.toggle('app--work', appState.mode === 'work');
+  elements.app.classList.toggle('app--break', appState.mode === 'shortBreak');
+
+  elements.mode.textContent = modeLabel;
   elements.display.textContent = formatTime(appState.timeLeft);
   elements.pomodoroCount.textContent = String(appState.completedPomodoros);
-  elements.status.textContent = 'Listo para empezar';
+  elements.status.textContent = appState.isRunning ? 'Trabajo en curso' : 'Listo para empezar';
 }
 
-renderInitialState();
+renderState();
